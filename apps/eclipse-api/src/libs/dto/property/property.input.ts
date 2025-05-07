@@ -1,6 +1,6 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsNotEmpty, IsOptional, Length, Min, IsInt, IsIn } from 'class-validator';
-import { WatchCountry, WatchCondition, WatchBrand, WatchStatus } from '../../enums/property.enum';
+import { WatchCountry, WatchCondition, WatchBrand, WatchStatus, WatchGender, WatchMaterial } from '../../enums/property.enum';
 import { ObjectId } from 'mongoose';
 import { availableOptions, availablePropertySorts } from '../../config';
 import { Direction } from '../../enums/common_enum';
@@ -19,6 +19,14 @@ export class PropertyInput {
     @Length(3, 100)
     @Field(() => String)
     propertyModel: string;
+
+    @IsNotEmpty()
+    @Field(() => WatchGender)
+    propertyCategory: WatchGender;
+
+    @IsNotEmpty()
+    @Field(() => WatchMaterial)
+    propertyMaterial: WatchMaterial
 
     @IsNotEmpty()
     @Length(3, 100)

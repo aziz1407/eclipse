@@ -1,29 +1,29 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty, IsOptional, Length } from 'class-validator';
-import { BoardArticleStatus } from '../../enums/board-article.enum';
+import { BlogStatus } from '../../enums/blog-enum';
 import { ObjectId } from 'mongoose';
 
 @InputType()
-export class BoardArticleUpdate {
+export class BlogUpdate {
 	@IsNotEmpty()
 	@Field(() => String)
 	_id: ObjectId;
 
 	@IsOptional()
-	@Field(() => BoardArticleStatus, { nullable: true })
-	articleStatus?: BoardArticleStatus;
+	@Field(() => BlogStatus, { nullable: true })
+	blogStatus?: BlogStatus;
 
 	@IsOptional()
 	@Length(3, 50)
 	@Field(() => String, { nullable: true })
-	articleTitle?: string;
+	blogTitle?: string;
 
 	@IsOptional()
 	@Length(3, 250)
 	@Field(() => String, { nullable: true })
-	articleContent?: string;
+	blogContent?: string;
 
 	@IsOptional()
 	@Field(() => String, { nullable: true })
-	articleImage?: string;
+	blogImage?: string;
 }

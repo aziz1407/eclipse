@@ -22,6 +22,7 @@ import { LikeInput } from '../../libs/dto/like/like.input';
 import { LikeGroup } from '../../libs/enums/like.enum';
 import { LikeService } from '../like/like.service';
 import { WASI } from 'node:wasi';
+import { MemberType } from '../../libs/enums/member.enum';
 
 @Injectable()
 export class PropertyService {
@@ -73,24 +74,33 @@ export class PropertyService {
         return targetProperty;
     }
 
-    public async updateProperty(memberId: ObjectId, input: PropertyUpdate): Promise<Property> {
+    public async updateProperty(
+        memberId: ObjectId,
+        memberType: MemberType,
+        input: PropertyUpdate
+    ): Promise<Property> {
         let { propertyStatus, soldAt, deletedAt } = input;
-        const search: T = {
+    
+        const search: any = {
             _id: input._id,
-            memberId: memberId,
             propertyStatus: WatchStatus.AVAILABLE,
         };
-
+    
+        if (memberType === MemberType.DEALER) {
+            search.memberId = memberId; // restrict dealers to their own properties
+        }
+    
         if (propertyStatus === WatchStatus.SOLD) soldAt = moment().toDate();
         else if (propertyStatus === WatchStatus.DELETED) deletedAt = moment().toDate();
-
+    
         const result = await this.propertyModel
             .findOneAndUpdate(search, input, {
                 new: true,
             })
             .exec();
+    
         if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
-
+    
         if (soldAt || deletedAt) {
             await this.memberService.memberStatsEditor({
                 _id: memberId,
@@ -98,7 +108,7 @@ export class PropertyService {
                 modifier: -1,
             });
         }
-
+    
         return result;
     }
 

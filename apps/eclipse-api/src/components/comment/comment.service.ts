@@ -4,7 +4,7 @@ import { Comment, Comments } from '../../libs/dto/comment/comment';
 import { MemberService } from '../member/member.service';
 import { Model, ObjectId } from 'mongoose';
 import { PropertyService } from '../property/property.service';
-import { BoardArticleService } from '../board-article/board-article.service';
+import { BlogService } from '../blog/blog.service';
 import { CommentInput, CommentsInquiry } from '../../libs/dto/comment/comment.input';
 import { Direction, Message } from '../../libs/enums/common_enum';
 import { CommentGroup, CommentStatus } from '../../libs/enums/comment.enum';
@@ -18,7 +18,7 @@ export class CommentService {
         @InjectModel('Comment') private readonly commentModule: Model<Comment>,
         private readonly memberService: MemberService,
         private readonly propertyService: PropertyService,
-        private readonly boardArticleService: BoardArticleService,
+        private readonly boardArticleService: BlogService,
     ) { }
 
     public async createComment(memberId: ObjectId, input: CommentInput): Promise<Comment> {
@@ -41,7 +41,7 @@ export class CommentService {
                 });
                 break;
             case CommentGroup.ARTICLE:
-                await this.boardArticleService.boardArticleStatsEditor({
+                await this.boardArticleService.blogStatisticsEditor({
                     _id: input.commentRefId,
                     targetKey: 'articleComments',
                     modifier: 1,

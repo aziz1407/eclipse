@@ -24,6 +24,9 @@ export class Member {
     memberPhone: string; //static ts type
 
     @Field(() => String)
+    memberEmail: string;
+
+    @Field(() => String)
     memberNick: string;
 
     memberPassword?: string;
@@ -44,7 +47,7 @@ export class Member {
     memberProperties: number;
 
     @Field(() => Int)
-    memberArticles: number;
+    memberBlogs: number;
 
     @Field(() => Int)
     memberFollowers: number;
@@ -69,9 +72,6 @@ export class Member {
 
     @Field(() => Int)
     memberWarnings: number;
-
-    @Field(() => Int)
-    memberBlocks: number;
 
     @Field(() => Date, { nullable: true })
     deletedAt?: Date;

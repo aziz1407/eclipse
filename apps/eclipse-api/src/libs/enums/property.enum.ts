@@ -4,7 +4,6 @@ import { registerEnumType } from '@nestjs/graphql';
 export enum WatchBrand {
   ROLEX = 'ROLEX',
   OMEGA = 'OMEGA',
-  PATEK_PHILIPPE = 'PATEK_PHILIPPE',
   AUDEMARS_PIGUET = 'AUDEMARS_PIGUET',
   JACOB_AND_CO = 'JACOB_AND_CO',
   TAG_HEUER = 'TAG_HEUER',
@@ -13,9 +12,17 @@ registerEnumType(WatchBrand, {
   name: 'WatchBrand',
 });
 
+export enum WatchGender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+}
+registerEnumType(WatchGender, {
+  name: 'WatchGender',
+});
+
 export enum WatchStatus {
   AVAILABLE = 'AVAILABLE',
-//   RESERVED = 'RESERVED',
+  RESERVED = 'RESERVED',
   SOLD = 'SOLD',
   DELETED = 'DELETED',
 }
@@ -33,6 +40,17 @@ export enum WatchCountry {
 }
 registerEnumType(WatchCountry, {
   name: 'WatchCountry',
+});
+
+export enum WatchMaterial {
+  LEATHER = 'LEATHER',
+  STEEL = 'STEEL',
+  GOLD = 'GOLD',
+  SILVER = 'SILVER',
+}
+
+registerEnumType(WatchMaterial, {
+  name: 'WatchMaterial',
 });
 
 export enum WatchCondition {

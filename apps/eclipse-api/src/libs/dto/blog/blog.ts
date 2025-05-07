@@ -1,37 +1,37 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { BoardArticleCategory, BoardArticleStatus } from '../../enums/board-article.enum';
+import { BlogCategory, BlogStatus } from '../../enums/blog-enum';
 import { ObjectId } from 'mongoose';
 import { Member, TotalCounter } from '../member/member';
 import { MeLiked } from '../like/like';
 
 @ObjectType()
-export class BoardArticle {
+export class Blog {
 	@Field(() => String)
 	_id: ObjectId;
 
-	@Field(() => BoardArticleCategory)
-	articleCategory: BoardArticleCategory;
+	@Field(() => BlogCategory)
+	blogCategory: BlogCategory;
 
-	@Field(() => BoardArticleStatus)
-	articleStatus: BoardArticleStatus;
-
-	@Field(() => String)
-	articleTitle: string;
+	@Field(() => BlogStatus)
+	blogStatus: BlogStatus;
 
 	@Field(() => String)
-	articleContent: string;
+	blogTitle: string;
+
+	@Field(() => String)
+	blogContent: string;
 
 	@Field(() => String, { nullable: true })
-	articleImage?: string;
+	blogImage?: string;
 
 	@Field(() => Int)
-	articleViews: number;
+	blogViews: number;
 
 	@Field(() => Int)
-	articleLikes: number;
+	blogLikes: number;
 
 	@Field(() => Int)
-	articleComments: number;
+	blogComments: number;
 
 	@Field(() => String)
 	memberId: ObjectId;
@@ -51,9 +51,9 @@ export class BoardArticle {
 }
 
 @ObjectType()
-export class BoardArticles {
-	@Field(() => [BoardArticle])
-	list: BoardArticle[];
+export class Blogs {
+	@Field(() => [Blog])
+	list: Blog[];
 
 	@Field(() => [TotalCounter], { nullable: true })
 	metaCounter: TotalCounter[];

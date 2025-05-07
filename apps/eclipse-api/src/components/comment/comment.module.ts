@@ -5,7 +5,7 @@ import CommentSchema from '../../schemas/Comment.model';
 import { AuthModule } from '../auth/auth.module';
 import { MemberModule } from '../member/member.module';
 import { PropertyModule } from '../property/property.module';
-import { BoardArticleModule } from '../board-article/board-article.module';
+import { BlogModule } from '../blog/blog.module';
 import { CommentService } from './comment.service';
 
 @Module({
@@ -19,7 +19,7 @@ import { CommentService } from './comment.service';
     AuthModule,
     MemberModule,
     PropertyModule,
-    BoardArticleModule,
+    BlogModule,
   ],
   providers: [CommentResolver, CommentService]
 })

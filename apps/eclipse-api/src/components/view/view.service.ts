@@ -37,7 +37,7 @@ export class ViewService {
                 { $sort: { updatedAt: -1 } },
                 {
                     $lookup: {
-                        from: 'properties',
+                        from: 'watches',
                         localField: 'viewRefId',
                         foreignField: '_id',
                         as: 'visitedProperty',

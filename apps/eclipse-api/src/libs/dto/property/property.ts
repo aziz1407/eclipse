@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { ObjectId } from "mongoose";
-import { WatchCountry, WatchCondition, WatchBrand, WatchStatus } from '../../enums/property.enum';
+import { WatchCountry, WatchCondition, WatchBrand, WatchStatus, WatchGender, WatchMaterial } from '../../enums/property.enum';
 import { Member, TotalCounter } from "../member/member";
 import { MeLiked } from "../like/like";
 
@@ -23,6 +23,12 @@ export class Property {
 
     @Field(() => String)
     propertyModel: string;
+
+    @Field(() => WatchGender)
+    propertyCategory: WatchGender;
+
+    @Field(() => WatchMaterial)
+    propertyMaterial: WatchMaterial
 
     @Field(() => Number)
     propertyPrice: number;

@@ -1,29 +1,29 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsIn, IsNotEmpty, IsOptional, Length, Min } from 'class-validator';
 import { ObjectId } from 'mongoose';
-import { BoardArticleCategory, BoardArticleStatus } from '../../enums/board-article.enum';
+import { BlogCategory, BlogStatus } from '../../enums/blog-enum';
 import { Direction } from '../../enums/common_enum';
-import { availableBoardArticleSorts } from '../../config';
+import { availableBlogSorts } from '../../config';
 
 @InputType()
-export class BoardArticleInput {
+export class BlogInput {
 	@IsNotEmpty()
-	@Field(() => BoardArticleCategory)
-	articleCategory: BoardArticleCategory;
+	@Field(() => BlogCategory)
+	blogCategory: BlogCategory;
 
 	@IsNotEmpty()
-	@Length(3, 50)
+	@Length(3, 70)
 	@Field(() => String)
-	articleTitle: string;
+	blogTitle: string;
 
 	@IsNotEmpty()
-	@Length(3, 250)
+	@Length(3, 500)
 	@Field(() => String)
-	articleContent: string;
+	blogContent: string;
 
 	@IsOptional()
 	@Field(() => String, { nullable: true })
-	articleImage?: string;
+	blogImage?: string;
 
 	memberId?: ObjectId;
 }
@@ -31,8 +31,8 @@ export class BoardArticleInput {
 @InputType()
 class BAISearch {
 	@IsOptional()
-	@Field(() => BoardArticleCategory, { nullable: true })
-	articleCategory?: BoardArticleCategory;
+	@Field(() => BlogCategory, { nullable: true })
+	blogCategory?: BlogCategory;
 
 	@IsOptional()
 	@Field(() => String, { nullable: true })
@@ -44,7 +44,7 @@ class BAISearch {
 }
 
 @InputType()
-export class BoardArticlesInquiry {
+export class BlogsInquiry {
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)
@@ -56,7 +56,7 @@ export class BoardArticlesInquiry {
 	limit: number;
 
 	@IsOptional()
-	@IsIn(availableBoardArticleSorts)
+	@IsIn(availableBlogSorts)
 	@Field(() => String, { nullable: true })
 	sort?: string;
 
@@ -72,16 +72,16 @@ export class BoardArticlesInquiry {
 @InputType()
 class ABAISearch {
 	@IsOptional()
-	@Field(() => BoardArticleStatus, { nullable: true })
-	articleStatus?: BoardArticleStatus;
+	@Field(() => BlogStatus, { nullable: true })
+	blogStatus?: BlogStatus;
 
 	@IsOptional()
-	@Field(() => BoardArticleCategory, { nullable: true })
-	articleCategory?: BoardArticleCategory;
+	@Field(() => BlogCategory, { nullable: true })
+	blogCategory?: BlogCategory;
 }
 
 @InputType()
-export class AllBoardArticlesInquiry {
+export class AllBlogsInquiry {
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)
@@ -93,7 +93,7 @@ export class AllBoardArticlesInquiry {
 	limit: number;
 
 	@IsOptional()
-	@IsIn(availableBoardArticleSorts)
+	@IsIn(availableBlogSorts)
 	@Field(() => String, { nullable: true })
 	sort?: string;
 

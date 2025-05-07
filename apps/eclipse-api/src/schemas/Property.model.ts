@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { WatchBrand, WatchCondition, WatchCountry, WatchStatus } from '../libs/enums/property.enum';
+import { WatchBrand, WatchCondition, WatchCountry, WatchGender, WatchMaterial, WatchStatus } from '../libs/enums/property.enum';
 
 const PropertySchema = new Schema(
 	{
@@ -24,6 +24,18 @@ const PropertySchema = new Schema(
 		propertyModel: {
 			type: String,
 			required: true,
+		},
+
+		propertyCategory: {
+			type: String,
+			enum: WatchGender,
+			required: true,
+		},
+
+		propertyMaterial: {
+			type: String,
+			enum: WatchMaterial,
+			required: true
 		},
 
 		propertyAddress: {

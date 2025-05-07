@@ -6,13 +6,20 @@ const MemberSchema = new Schema(
         memberType: {
             type: String,
             enum: MemberType,
-            default: MemberType.USER,
+            default: MemberType.CUSTOMER,
         },
 
         memberStatus: {
             type: String,
             enum:MemberStatus,
             default: MemberStatus.ACTIVE,
+        },
+
+        memberEmail: {
+            type: String,
+            index: { unique: true, sparse: true },
+            lowercase: true,
+            trim: true,
         },
 
         memberAuthType: {
@@ -61,7 +68,7 @@ const MemberSchema = new Schema(
             default: 0,
         },
 
-        memberArticles: {
+        memberBlogs: {
             type: Number,
             default: 0,
         },

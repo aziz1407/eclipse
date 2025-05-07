@@ -11,7 +11,7 @@ export const availablePropertySorts = [
     'propertyRank',
     'propertyPrice',
 ]
-export const availableBoardArticleSorts = ['createdAt', 'updatedAt', 'articleLikes', 'articleViews']
+export const availableBlogSorts = ['createdAt', 'updatedAt', 'articleLikes', 'articleViews']
 export const availableCommentSorts = ['createdAt', 'updatedAt']
 
 /** IMAGE CONFIGURATION  */
@@ -19,7 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as path from 'path';
 import { T } from "./types/common";
 
-export const validMimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+export const validMimeTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/avif'];
 export const getSerialForImage = (filename: string) => {
     const ext = path.parse(filename).ext;
     return uuidv4() + ext;

@@ -34,4 +34,4 @@ import { SocketModule } from './socket/socket.module';
   controllers: [AppController],
   providers: [AppService, AppResolver],
 })
-export class AppModule { }
+export class AppModule {}

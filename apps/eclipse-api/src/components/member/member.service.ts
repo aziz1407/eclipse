@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { Member, Members } from '../../libs/dto/member/member';
-import { AgentsInquiry, LoginInput, MemberInput, MembersInquiry } from '../../libs/dto/member/member.input';
+import { DealersInquiry, LoginInput, MemberInput, MembersInquiry } from '../../libs/dto/member/member.input';
 import { MemberStatus, MemberType } from '../../libs/enums/member.enum';
 import { Direction, Message } from '../../libs/enums/common_enum';
 import { AuthService } from '../auth/auth.service';
@@ -39,11 +39,17 @@ export class MemberService {
     }
 
     public async login(input: LoginInput): Promise<Member> {
-        const { memberNick, memberPassword } = input;
+        const { memberNick, memberPassword, memberEmail } = input;
+
         const response: Member | null = await this.memberModel
-            .findOne({ memberNick: memberNick })
-            .select('+memberPassword')
-            .exec();
+          .findOne({
+            $or: [
+              { memberNick: memberNick },
+              { memberEmail: memberEmail }
+            ]
+          })
+          .select('+memberPassword')
+          .exec();
 
         if (!response || response.memberStatus === MemberStatus.DELETE) {
             throw new InternalServerErrorException(Message.NO_MEMBER_NICK);
@@ -106,9 +112,9 @@ export class MemberService {
         return result ? [{ followerId: followerId, followingId: followingId, myFollowing: true }] : [];
     }
 
-    public async getAgents(memberId: ObjectId, input: AgentsInquiry): Promise<Members> {
+    public async getDealers(memberId: ObjectId, input: DealersInquiry): Promise<Members> {
         const { text } = input.search;
-        const match: T = { memberType: MemberType.AGENT, memberStatus: MemberStatus.ACTIVE };
+        const match: T = { memberType: MemberType.DEALER, memberStatus: MemberStatus.ACTIVE };
         const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC }
 
         if (text) match.memberNick = { $regex: new RegExp(text, 'i') };
