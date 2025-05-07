@@ -185,7 +185,7 @@ export class BlogService {
     likeRefId: ObjectId,
   ): Promise<Blog> {
     const target: Blog | null = await this.blogModel
-      .findOne({ _id: likeRefId, articleStatus: BlogStatus.ACTIVE })
+      .findOne({ _id: likeRefId, blogStatus: BlogStatus.ACTIVE })
       .exec();
     if (!target) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 

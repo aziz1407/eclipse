@@ -18,7 +18,7 @@ export class CommentService {
         @InjectModel('Comment') private readonly commentModule: Model<Comment>,
         private readonly memberService: MemberService,
         private readonly propertyService: PropertyService,
-        private readonly boardArticleService: BlogService,
+        private readonly blogService: BlogService,
     ) { }
 
     public async createComment(memberId: ObjectId, input: CommentInput): Promise<Comment> {
@@ -33,17 +33,17 @@ export class CommentService {
         }
 
         switch (input.commentGroup) {
-            case CommentGroup.PROPERTY:
+            case CommentGroup.WATCH:
                 await this.propertyService.propertyStatsEditor({
                     _id: input.commentRefId,
                     targetKey: 'propertyComments',
                     modifier: 1,
                 });
                 break;
-            case CommentGroup.ARTICLE:
-                await this.boardArticleService.blogStatisticsEditor({
+            case CommentGroup.BLOG:
+                await this.blogService.blogStatisticsEditor({
                     _id: input.commentRefId,
-                    targetKey: 'articleComments',
+                    targetKey: 'blogComments',
                     modifier: 1,
                 });
                 break;
@@ -92,7 +92,7 @@ export class CommentService {
                         { $limit: input.limit },
                         // meliked
                         lookupMember,
-                        { $unwind: '$memberData' },
+                        { $unwind: { path: "$memberData", preserveNullAndEmptyArrays: true } },
                     ],
                     metaCounter: [{ $count: 'total' }],
                 },
