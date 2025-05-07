@@ -4,9 +4,9 @@ import { registerEnumType } from '@nestjs/graphql';
 export enum WatchBrand {
   ROLEX = 'ROLEX',
   OMEGA = 'OMEGA',
-  AUDEMARS_PIGUET = 'AUDEMARS_PIGUET',
   JACOB_AND_CO = 'JACOB_AND_CO',
   TAG_HEUER = 'TAG_HEUER',
+  TISSOT = "TISSOT"
 }
 registerEnumType(WatchBrand, {
   name: 'WatchBrand',
@@ -15,6 +15,7 @@ registerEnumType(WatchBrand, {
 export enum WatchGender {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
+  UNISEX = "UNISEX"
 }
 registerEnumType(WatchGender, {
   name: 'WatchGender',
@@ -38,6 +39,7 @@ export enum WatchCountry {
   FRANCE = 'FRANCE',
   ITALY = 'ITALY',
 }
+
 registerEnumType(WatchCountry, {
   name: 'WatchCountry',
 });

@@ -142,13 +142,13 @@ export class BlogService {
     input: BlogsInquiry,
   ): Promise<Blogs> {
     const { blogCategory, text } = input.search;
-    const match: T = { articleStatus: BlogStatus.ACTIVE };
+    const match: T = { blogStatus: BlogStatus.ACTIVE };
     const sort: T = {
       [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC,
     };
 
     if (blogCategory) match.blogCategory = blogCategory;
-    if (text) match.articleTitle = { $regex: new RegExp(text, 'i') }; // ?
+    if (text) match.blogTitle = { $regex: new RegExp(text, 'i') }; // ?
     if (input.search?.memberId) {
       match.memberId = ShapeIntoMongoObjectId(input.search.memberId);
     }
