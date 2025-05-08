@@ -51,7 +51,7 @@ export class CommentResolver {
 
     /** ADMIN **/
 
-    @Roles(MemberType.ADMIN)
+    @Roles(MemberType.ADMIN, MemberType.MODERATOR)
     @UseGuards(RolesGuard)
     @Mutation((returns) => Comment)
     public async removeCommentByAdmin(@Args('commentId') input: string): Promise<Comment> {

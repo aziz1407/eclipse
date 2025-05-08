@@ -39,6 +39,9 @@ export class Property {
     @Field(() => WatchCondition)
     propertyCondition: WatchCondition;
 
+    @Field(() => Int)
+	propertyLikes: number;
+
     @Field(() => [String])
     propertyImages: string[];
 

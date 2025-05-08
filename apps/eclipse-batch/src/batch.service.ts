@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Member } from 'apps/eclipse-api/src/libs/dto/member/member';
 import { Property } from 'apps/eclipse-api/src/libs/dto/property/property';
 import { MemberStatus, MemberType } from 'apps/eclipse-api/src/libs/enums/member.enum';
-import { PropertyStatus } from 'apps/eclipse-api/src/libs/enums/property.enum';
+import { WatchStatus } from 'apps/eclipse-api/src/libs/enums/property.enum';
 import { Model } from 'mongoose';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class BatchService {
     await this.propertyModel
       .updateMany(
         {
-          propertyStatus: PropertyStatus.ACTIVE,
+          propertyStatus: WatchStatus.AVAILABLE,
         },
         { propertyRank: 0 },
       )
@@ -27,7 +27,7 @@ export class BatchService {
       .updateMany(
         {
           memberStatus: MemberStatus.ACTIVE,
-          memberType: MemberType.AGENT,
+          memberType: MemberType.DEALER,
         },
         { memberRank: 0 },
       )
@@ -37,7 +37,7 @@ export class BatchService {
   public async batchTopProperties(): Promise<void> {
     const properties: Property[] = await this.propertyModel
       .find({
-        propertyStatus: PropertyStatus.ACTIVE,
+        propertyStatus: WatchStatus.AVAILABLE,
         propertyRank: 0
       })
       .exec();
@@ -54,7 +54,7 @@ export class BatchService {
   public async batchTopAgents(): Promise<void> {
     const agents: Member[] = await this.memberModel
       .find({
-        memberType: MemberType.AGENT,
+        memberType: MemberType.DEALER,
         memberStatus: MemberStatus.ACTIVE,
         memberRank: 0
       })
