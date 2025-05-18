@@ -1,6 +1,6 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsNotEmpty, IsOptional, Length, Min, IsInt, IsIn } from 'class-validator';
-import { WatchCountry, WatchCondition, WatchBrand, WatchStatus, WatchGender, WatchMaterial } from '../../enums/property.enum';
+import { WatchCountry, WatchCondition, WatchBrand, WatchStatus, WatchGender, WatchMaterial, WatchMovement } from '../../enums/property.enum';
 import { ObjectId } from 'mongoose';
 import { availableOptions, availablePropertySorts } from '../../config';
 import { Direction } from '../../enums/common_enum';
@@ -38,8 +38,16 @@ export class PropertyInput {
     propertyPrice: number;
 
     @IsNotEmpty()
+    @Field(() => Number)
+    propertyYear: number;
+
+    @IsNotEmpty()
     @Field(() => WatchCondition)
     propertyCondition: WatchCondition;
+
+    @IsOptional()
+    @Field(() => WatchMovement, { nullable: true })
+    propertyMovement?: WatchMovement;
 
     @IsNotEmpty()
     @Field(() => [String])
@@ -49,14 +57,6 @@ export class PropertyInput {
     @Length(5, 500)
     @Field(() => String, { nullable: true })
     propertyDesc?: string;
-
-    @IsOptional()
-    @Field(() => Boolean, { nullable: true })
-    propertyBarter?: boolean;
-
-    @IsOptional()
-    @Field(() => Boolean, { nullable: true })
-    propertyRent?: boolean;
 
     memberId?: ObjectId;
 
@@ -75,24 +75,6 @@ export class PricesRange {
 }
 
 @InputType()
-export class SquaresRange {
-    @Field(() => Int)
-    start: number;
-
-    @Field(() => Int)
-    end: number;
-}
-
-@InputType()
-export class PeriodsRange {
-    @Field(() => Date)
-    start: Date;
-
-    @Field(() => Date)
-    end: Date;
-}
-
-@InputType()
 class PISearch {
     @IsOptional()
     @Field(() => String, { nullable: true })
@@ -107,12 +89,20 @@ class PISearch {
     typeList?: WatchBrand[];
 
     @IsOptional()
-    @Field(() => [Int], { nullable: true })
-    roomsList?: Number[];
+    @Field(() => [WatchGender], { nullable: true })
+    propertyCategory?: WatchGender[];
 
     @IsOptional()
-    @Field(() => [Int], { nullable: true })
-    bedsList?: Number[];
+    @Field(() => [WatchMaterial], { nullable: true })
+    propertyMaterial?: WatchMaterial[];
+
+    @IsOptional()
+    @Field(() => [WatchCondition], { nullable: true })
+    propertyCondition?: WatchCondition[];
+
+    @IsOptional()
+    @Field(() => [WatchMovement], { nullable: true })
+    propertyMovement?: WatchMovement[];
 
     @IsOptional()
     @IsIn(availableOptions, { each: true })

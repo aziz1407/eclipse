@@ -57,4 +57,5 @@ export class Blogs {
 
 	@Field(() => [TotalCounter], { nullable: true })
 	metaCounter: TotalCounter[];
+
 }

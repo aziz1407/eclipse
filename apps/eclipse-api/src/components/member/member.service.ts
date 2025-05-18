@@ -26,17 +26,26 @@ export class MemberService {
         private likeService: LikeService,
     ) { }
 
-    public async signup(input: MemberInput): Promise<Member> {
-        input.memberPassword = await this.authService.hashPassword(input.memberPassword);
-        try {
-            const result = await this.memberModel.create(input);
-            result.accessToken = await this.authService.createToken(result);
-            return result;
-        } catch (err) {
-            console.log('Error, Service.model:', err.message);
-            throw new BadRequestException(Message.USED_MEMBER_NICK_OR_PHONE);
+public async signup(input: MemberInput): Promise<Member> {
+    input.memberPassword = await this.authService.hashPassword(input.memberPassword);
+
+    if (input.memberType === 'MODERATOR') {
+        const existingModerator = await this.memberModel.findOne({ memberType: 'MODERATOR' });
+        if (existingModerator) {
+            throw new BadRequestException('Only one MODERATOR is allowed.');
         }
     }
+
+    try {
+        const result = await this.memberModel.create(input);
+        result.accessToken = await this.authService.createToken(result);
+        return result;
+    } catch (err) {
+        console.log('Error, Service.model:', err.message);
+        throw new BadRequestException(Message.USED_MEMBER_NICK_OR_PHONE);
+    }
+}
+
 
     public async login(input: LoginInput): Promise<Member> {
         const { memberNick, memberPassword, memberEmail } = input;

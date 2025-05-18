@@ -4,9 +4,9 @@ import { registerEnumType } from '@nestjs/graphql';
 export enum WatchBrand {
   ROLEX = 'ROLEX',
   OMEGA = 'OMEGA',
-  JACOB_AND_CO = 'JACOB_AND_CO',
-  TAG_HEUER = 'TAG_HEUER',
-  TISSOT = "TISSOT"
+  IWC = 'IWC',
+  LONGINES = 'LONGINES',
+  PANERAI = 'PANERAI',
 }
 registerEnumType(WatchBrand, {
   name: 'WatchBrand',
@@ -15,7 +15,7 @@ registerEnumType(WatchBrand, {
 export enum WatchGender {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
-  UNISEX = "UNISEX"
+  UNISEX = 'UNISEX',
 }
 registerEnumType(WatchGender, {
   name: 'WatchGender',
@@ -25,19 +25,21 @@ export enum WatchStatus {
   AVAILABLE = 'AVAILABLE',
   RESERVED = 'RESERVED',
   SOLD = 'SOLD',
-  DELETED = 'DELETED',
+  DELETE = 'DELETE',
 }
 registerEnumType(WatchStatus, {
   name: 'WatchStatus',
 });
 
 export enum WatchCountry {
-  SWITZERLAND = 'SWITZERLAND',
-  JAPAN = 'JAPAN',
-  GERMANY = 'GERMANY',
-  USA = 'USA',
-  FRANCE = 'FRANCE',
-  ITALY = 'ITALY',
+  UAE = "UAE",
+  SWITZERLAND = "SWITZERLAND",
+  JAPAN = "JAPAN",
+  GERMANY = "GERMANY",
+  FRANCE = "FRANCE",
+  UNITED_KINGDOM = "UNITED_KINGDOM",
+  ITALY = "ITALY",
+  USA = "USA"
 }
 
 registerEnumType(WatchCountry, {
@@ -56,10 +58,19 @@ registerEnumType(WatchMaterial, {
 });
 
 export enum WatchCondition {
-  BRAND_NEW = 'BRAND_NEW',
+  NEW = 'NEW',
   SECONDHAND = 'SECONDHAND',
   REFURBISHED = 'REFURBISHED',
 }
 registerEnumType(WatchCondition, {
   name: 'WatchCondition',
+});
+
+export enum WatchMovement {
+  QUARTZ = 'QUARTZ',
+  AUTOMATIC = 'AUTOMATIC',
+  MECHANICAL = 'MECHANICAL',
+}
+registerEnumType(WatchMovement, {
+  name: 'WatchMovement',
 });

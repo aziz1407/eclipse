@@ -247,7 +247,7 @@ export class BlogService {
     const { _id, blogStatus } = input;
 
     const result = await this.blogModel
-      .findOneAndUpdate({ _id: _id, articleStatus: BlogStatus.ACTIVE }, input, {
+      .findOneAndUpdate({ _id: _id, blogStatus: BlogStatus.ACTIVE }, input, {
         new: true,
       })
       .exec();

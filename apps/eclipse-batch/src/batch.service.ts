@@ -42,7 +42,7 @@ export class BatchService {
       })
       .exec();
 
-  // arry ustida etereshin mezitini qo'layapmiz va map qo'lagan holda har bitta elementimizni qo'lga olayapmiz
+ 
     const promisedList = properties.map(async (ele: Property) => {
       const { _id, propertyLikes, propertyViews } = ele;
       const rank = propertyLikes * 2 + propertyViews * 1;
@@ -52,7 +52,7 @@ export class BatchService {
   }
 
   public async batchTopAgents(): Promise<void> {
-    const agents: Member[] = await this.memberModel
+    const dealers: Member[] = await this.memberModel
       .find({
         memberType: MemberType.DEALER,
         memberStatus: MemberStatus.ACTIVE,
@@ -60,9 +60,9 @@ export class BatchService {
       })
       .exec();
 
-    const promisedList = agents.map(async (ele: Member) => {
-      const { _id, memberProperties, memberLikes, memberBlogs: memberArticles, memberViews } = ele;
-      const rank = memberProperties * 5 + memberArticles * 3 + memberLikes * 2 + memberViews * 1;
+    const promisedList = dealers.map(async (ele: Member) => {
+      const { _id, memberProperties, memberLikes, memberBlogs: memberBlogs, memberViews } = ele;
+      const rank = memberProperties * 5 + memberBlogs * 3 + memberLikes * 2 + memberViews * 1;
       return await this.memberModel.findByIdAndUpdate(_id, { memberRank: rank });
     });
     await Promise.all(promisedList);

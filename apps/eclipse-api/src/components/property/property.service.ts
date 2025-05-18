@@ -91,7 +91,7 @@ export class PropertyService {
         }
     
         if (propertyStatus === WatchStatus.SOLD) soldAt = moment().toDate();
-        else if (propertyStatus === WatchStatus.DELETED) deletedAt = moment().toDate();
+        else if (propertyStatus === WatchStatus.DELETE) deletedAt = moment().toDate();
     
         const result = await this.propertyModel
             .findOneAndUpdate(search, input, {
@@ -146,18 +146,22 @@ export class PropertyService {
         const {
             memberId,
             locationList,
-            roomsList,
-            bedsList,
+            propertyCategory,
+            propertyMaterial,
+            propertyCondition,
+            propertyMovement,
             typeList,
             pricesRange,
             options,
             text,
         } = input.search;
         if (memberId) match.memberId = ShapeIntoMongoObjectId(memberId);
-        if (locationList) match.propertyLocation = { $in: locationList };
-        if (roomsList) match.propertyRooms = { $in: roomsList };
-        if (bedsList) match.propertyBeds = { $in: bedsList };
-        if (typeList) match.propertyType = { $in: typeList };
+        if (locationList) match.propertyCountry = { $in: locationList };
+        if (propertyCategory) match.propertyCategory = { $in: propertyCategory };
+        if (propertyCondition) match.propertyCondition = { $in: propertyCondition };
+        if (propertyMaterial) match.propertyMaterial = { $in: propertyMaterial };
+        if (propertyMovement) match.propertyMovement = { $in: propertyMovement };
+        if (typeList) match.propertyBrand = { $in: typeList };
 
         if (pricesRange) match.propertyPrice = { $gte: pricesRange.start, $lte: pricesRange.end };
         if (text) match.propertyTitle = { $regex: new RegExp(text, 'i') };
@@ -178,11 +182,11 @@ export class PropertyService {
 
     public async getAgentProperties(memberId: ObjectId, input: AgentPropertiesInquiry): Promise<Properties> {
         const { propertyStatus } = input.search;
-        if (propertyStatus === WatchStatus.DELETED) throw new BadRequestException(Message.NOT_ALLOWED_REQUEST);
+        if (propertyStatus === WatchStatus.DELETE) throw new BadRequestException(Message.NOT_ALLOWED_REQUEST);
 
         const match: T = {
             memberId: memberId,
-            propertyStatus: propertyStatus ?? { $ne: WatchStatus.DELETED },
+            propertyStatus: propertyStatus ?? { $ne: WatchStatus.DELETE },
         };
         const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };
 
@@ -265,7 +269,7 @@ export class PropertyService {
         };
 
         if (propertyStatus === WatchStatus.SOLD) soldAt = moment().toDate();
-        else if (propertyStatus === WatchStatus.DELETED) deletedAt = moment().toDate();
+        else if (propertyStatus === WatchStatus.DELETE) deletedAt = moment().toDate();
 
         const result = await this.propertyModel
             .findOneAndUpdate(search, input, {
@@ -286,7 +290,7 @@ export class PropertyService {
     }
 
     public async removePropertyByAdmin(propertyId: ObjectId): Promise<Property> {
-        const search: T = { _id: propertyId, propertyStatus: WatchStatus.DELETED };
+        const search: T = { _id: propertyId, propertyStatus: WatchStatus.DELETE };
         const result = await this.propertyModel.findOneAndDelete(search).exec();
         if (!result) throw new InternalServerErrorException(Message.REMOVE_FAILED);
 

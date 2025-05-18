@@ -11,7 +11,7 @@ export const availablePropertySorts = [
     'propertyRank',
     'propertyPrice',
 ]
-export const availableBlogSorts = ['createdAt', 'updatedAt', 'articleLikes', 'articleViews']
+export const availableBlogSorts = ['createdAt', 'updatedAt', 'blogLikes', 'blogViews']
 export const availableCommentSorts = ['createdAt', 'updatedAt']
 
 /** IMAGE CONFIGURATION  */
