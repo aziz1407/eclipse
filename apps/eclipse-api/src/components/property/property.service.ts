@@ -164,12 +164,12 @@ export class PropertyService {
         if (typeList) match.propertyBrand = { $in: typeList };
 
         if (pricesRange) match.propertyPrice = { $gte: pricesRange.start, $lte: pricesRange.end };
-        if (text) match.propertyTitle = { $regex: new RegExp(text, 'i') };
-        if (options) {
-            match['$or'] = options.map((ele) => {
-                return { [ele]: true };
-            });
-        }
+        if (text) match.propertyModel = { $regex: new RegExp(text, 'i') };
+        // if (options) {
+        //     match['$or'] = options.map((ele) => {
+        //         return { [ele]: true };
+        //     });
+        // }
     }
 
     public async getFavorites(memberId: ObjectId, input: OrdinaryInquiry): Promise<Properties> {

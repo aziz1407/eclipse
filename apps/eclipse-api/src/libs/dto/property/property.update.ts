@@ -30,7 +30,7 @@ export class PropertyUpdate {
     @IsOptional()
     @Length(3, 100)
     @Field(() => String, { nullable: true })
-    propertyTitle?: string;
+    propertyModel?: string;
 
     @IsOptional()
     @Field(() => Number, { nullable: true })
@@ -41,18 +41,6 @@ export class PropertyUpdate {
     propertySquare?: number;
 
     @IsOptional()
-    @IsInt()
-    @Min(1)
-    @Field(() => Int, { nullable: true })
-    propertyBeds?: number;
-
-    @IsOptional()
-    @IsInt()
-    @Min(1)
-    @Field(() => Int, { nullable: true })
-    propertyRooms?: number;
-
-    @IsOptional()
     @Field(() => [String], { nullable: true })
     propertyImages?: string[];
 
@@ -60,14 +48,6 @@ export class PropertyUpdate {
     @Length(5, 500)
     @Field(() => String, { nullable: true })
     propertyDesc?: string;
-
-    @IsOptional()
-    @Field(() => Boolean, { nullable: true })
-    propertyBarter?: boolean;
-
-    @IsOptional()
-    @Field(() => Boolean, { nullable: true })
-    propertyRent?: boolean;
 
     soldAt?: Date;
 

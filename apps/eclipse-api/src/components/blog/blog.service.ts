@@ -74,7 +74,7 @@ export class BlogService {
       const viewInput = {
         memberId: memberId,
         viewRefId: blogId,
-        viewGroup: ViewGroup.ARTICLE,
+        viewGroup: ViewGroup.BLOG,
       }; // men , nimani ,qayerdan
       const newView = await this.viewService.recordView(viewInput);
       if (newView) {
@@ -89,7 +89,7 @@ export class BlogService {
       const LikeInput = {
         memberId: memberId,
         likeRefId: blogId,
-        likeGroup: LikeGroup.ARTICLE,
+        likeGroup: LikeGroup.BLOG,
       };
       targetedBlog.meLiked =
         await this.likeService.checkLikeExistence(LikeInput);
@@ -192,7 +192,7 @@ export class BlogService {
     const input: LikeInput = {
       memberId: memberId,
       likeRefId: likeRefId,
-      likeGroup: LikeGroup.ARTICLE,
+      likeGroup: LikeGroup.BLOG,
     };
 
     const modifier: number = await this.likeService.toggleLike(input);
