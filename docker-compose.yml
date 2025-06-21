@@ -6,21 +6,21 @@ services:
     restart: always
     image: node:20.10.0
     ports:
-      - 4001:3001
+      - 4001:3007
     volumes:
       - ./:/usr/src/eclipse
     working_dir: /usr/src/eclipse
     networks:
       - monorepo-network
     # FOR PRODUCTION
-    command: bash -c "npm install && npm run build && npm run start:prod"
+    command: bash -c "rm -rf dist && npm install && npm run build && npm run start:prod"
 
   eclipse_batch:
     container_name: eclipse_batch
     restart: unless-stopped
     image: node:20.10.0
     ports:
-      - 4002:3005
+      - 4002:3008
     volumes:
       - ./:/usr/src/eclipse
     working_dir: /usr/src/eclipse

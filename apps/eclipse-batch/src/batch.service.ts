@@ -62,7 +62,7 @@ export class BatchService {
 
     const promisedList = dealers.map(async (ele: Member) => {
       const { _id, memberProperties, memberLikes, memberBlogs: memberBlogs, memberViews } = ele;
-      const rank = memberProperties * 5 + memberBlogs * 3 + memberLikes * 2 + memberViews * 1;
+      const rank = memberProperties * 5 + memberLikes * 2 + memberViews * 1;
       return await this.memberModel.findByIdAndUpdate(_id, { memberRank: rank });
     });
     await Promise.all(promisedList);
