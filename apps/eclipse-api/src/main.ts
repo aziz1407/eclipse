@@ -6,24 +6,16 @@ import { graphqlUploadExpress } from 'graphql-upload';
 import * as express from 'express';
 import { WsAdapter } from '@nestjs/platform-ws';
 
-async function bootstrap() {
+async function bootstrap() { /// Definition
   const app = await NestFactory.create(AppModule);
-
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe()); //ValidationPipe instensini argument sifatida Path qilamiz
   app.useGlobalInterceptors(new LoggingInterceptor());
+  app.enableCors({ origin: true, credentials: true });
 
-  // ✅ Enable CORS with proper settings
-  app.enableCors({
-    origin: ['http://31.97.187.110:4000'], // Frontend origin
-    credentials: true,
-  });
-
-  app.use(graphqlUploadExpress({ maxFileSize: 15000000, maxFiles: 10 }));
+  app.use(graphqlUploadExpress({ maxFileSize: 15000000, maxFiles: 10 }))
   app.use('/uploads', express.static('./uploads'));
 
-  app.useWebSocketAdapter(new WsAdapter(app));
-
-  // ✅ Listen on 0.0.0.0 so it's accessible outside Docker
-  await app.listen(process.env.PORT_API ?? 3000, '0.0.0.0');
+  app.useWebSocketAdapter(new WsAdapter(app))
+  await app.listen(process.env.PORT_API ?? 3000);
 }
-bootstrap();
+bootstrap();//Execution
