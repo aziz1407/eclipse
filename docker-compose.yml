@@ -1,8 +1,8 @@
 version: "3.3"
 
 services:
-  eclipse_api:
-    container_name: eclipse_api
+  eclipse-api:
+    container_name: eclipse-api
     restart: always
     image: node:20.10.0
     ports:
@@ -16,8 +16,8 @@ services:
       - PORT_API=3007  # ✅ Add this line
     command: bash -c "rm -rf dist && npm install && npm run build && npm run start:prod"
 
-  eclipse_batch:
-    container_name: eclipse_batch
+  eclipse-batch:
+    container_name: eclipse-batch
     restart: unless-stopped
     image: node:20.10.0
     ports:
