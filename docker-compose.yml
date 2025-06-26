@@ -5,15 +5,15 @@ services:
     image: node:20.10.0
     ports:
       - 4001:3007
-    # volumes:
-    #   - ./:/usr/src/eclipse
+    volumes:
+      - ./:/usr/src/eclipse
     working_dir: /usr/src/eclipse
     networks:
       - monorepo-network
-    # environment:
-    #   - PORT_API=3007
+    environment:
+      - PORT_API=3007
     # FOR PRODUCTION
-    command: env PORT_API=3007 bash -c "rm -rf dist && npm install && npm run build && npm run start:prod"
+    command: bash -c "rm -rf dist && npm install && npm run build && npm run start:prod"
 
   eclipse-batch:
     container_name: eclipse-batch
