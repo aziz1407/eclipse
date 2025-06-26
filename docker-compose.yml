@@ -11,7 +11,7 @@ services:
     networks:
       - monorepo-network
     environment:
-      - PORT_API=3007
+      - PORT_API=3010
     # FOR PRODUCTION
     command: bash -c "rm -rf dist && npm install && npm run build && npm run start:prod"
 
